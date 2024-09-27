@@ -59,7 +59,10 @@
                     <button onclick="togglePlay('${sectionId}-${audio.name}')" class="bg-indigo-500 text-white px-3 py-1 rounded-full hover:bg-indigo-600 transition duration-300 text-sm">
                         <i class="fas fa-play mr-1"></i>Play
                     </button>
-                    <input type="range" min="0" max="1" step="0.1" value="1" class="w-1/2" oninput="adjustVolume('${sectionId}-${audio.name}', this.value)">
+                    <button onclick="resetAudio('${sectionId}-${audio.name}')" class="bg-green-500 text-white px-3 py-1 rounded-full hover:bg-green-600 transition duration-300 text-sm ml-2">
+                        <i class="fas fa-undo mr-1"></i>Reset
+                    </button>
+                    <input type="range" min="0" max="1" step="0.1" value="1" class="w-1/3" oninput="adjustVolume('${sectionId}-${audio.name}', this.value)">
                 </div>
             `;
             return audioElement;
@@ -89,6 +92,14 @@
             } else {
                 player.pause();
                 button.innerHTML = '<i class="fas fa-play mr-1"></i>Play';
+            }
+        }
+
+        function resetAudio(audioId) {
+            const player = document.getElementById(audioId);
+            player.currentTime = 0;
+            if (!player.paused) {
+                player.play().catch(e => console.error("Error playing audio:", e));
             }
         }
 
