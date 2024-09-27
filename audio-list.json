@@ -1,0 +1,44 @@
+{
+  "backgroundAudio": [
+    {
+      "name": "Forest Ambience",
+      "file": "audio/background/forest-ambience.mp3"
+    },
+    {
+      "name": "Ocean Waves",
+      "file": "audio/background/ocean-waves.mp3"
+    },
+    {
+      "name": "Gentle Rain",
+      "file": "audio/background/gentle-rain.mp3"
+    }
+  ],
+  "minorAudio": [
+    {
+      "name": "Bird Chirping",
+      "file": "audio/minor/bird-chirping.mp3"
+    },
+    {
+      "name": "Wind Chimes",
+      "file": "audio/minor/wind-chimes.mp3"
+    },
+    {
+      "name": "Crackling Fire",
+      "file": "audio/minor/crackling-fire.mp3"
+    }
+  ],
+  "soundEffects": [
+    {
+      "name": "Door Creak",
+      "file": "audio/effects/door-creak.mp3"
+    },
+    {
+      "name": "Glass Breaking",
+      "file": "audio/effects/glass-breaking.mp3"
+    },
+    {
+      "name": "Thunder Clap",
+      "file": "audio/effects/thunder-clap.mp3"
+    }
+  ]
+}
