@@ -2,63 +2,63 @@
   "backgroundAudio": [
     {
       "name": "Background",
-      "file": "audio/background/Background.mp3"
+      "file": "./background/Background.mp3"
     }
   ],
   "minorAudio": [
     {
       "name": "Yebok",
-      "file": "audio/minor/Yebok.mp3"
+      "file": "./minor/Yebok.mp3"
     },
     {
       "name": "GameFace",
-      "file": "audio/minor/GameFace.mp3"
+      "file": "./minor/GameFace.mp3"
     },
     {
       "name": "Gloomy",
-      "file": "audio/minor/Gloomy.mp3"
+      "file": "./minor/Gloomy.mp3"
     },
     {
       "name": "DongLinhDao",
-      "file": "audio/minor/Donglinhdao.mp3"
+      "file": "./minor/Donglinhdao.mp3"
     }
   ],
   "soundEffects": [
     {
       "name": "Gun1",
-      "file": "audio/effects/Gun1.mp3"
+      "file": "./effects/Gun1.mp3"
     },
     {
       "name": "Gun2",
-      "file": "audio/effects/Gun2.mp3"
+      "file": "./effects/Gun2.mp3"
     },
     {
       "name": "Wolf",
-      "file": "audio/effects/Wolf.mp3"
+      "file": "./effects/Wolf.mp3"
     },
     {
       "name": "Thunder",
-      "file": "audio/effects/Thunder.mp3"
+      "file": "./effects/Thunder.mp3"
     },
     {
       "name": "Eating",
-      "file": "audio/effects/Eating.mp3"
+      "file": "./effects/Eating.mp3"
     },
     {
       "name": "Ghost1",
-      "file": "audio/effects/Ghost1.mp3"
+      "file": "./effects/Ghost1.mp3"
     },
     {
       "name": "Ghost2",
-      "file": "audio/effects/Ghost2.mp3"
+      "file": "./effects/Ghost2.mp3"
     },
     {
       "name": "Ghost3",
-      "file": "audio/effects/Ghost3.mp3"
+      "file": "./effects/Ghost3.mp3"
     },
     {
       "name": "Ghost4",
-      "file": "audio/effects/Ghost4.mp3"
+      "file": "./effects/Ghost4.mp3"
     }
   ]
 }
