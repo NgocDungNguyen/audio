@@ -1,44 +1,64 @@
 {
   "backgroundAudio": [
     {
-      "name": "Forest Ambience",
-      "file": "audio/background/forest-ambience.mp3"
-    },
-    {
-      "name": "Ocean Waves",
-      "file": "audio/background/ocean-waves.mp3"
-    },
-    {
-      "name": "Gentle Rain",
-      "file": "audio/background/gentle-rain.mp3"
+      "name": "Background",
+      "file": "audio/background/Background.mp3"
     }
   ],
   "minorAudio": [
     {
-      "name": "Bird Chirping",
-      "file": "audio/minor/bird-chirping.mp3"
+      "name": "Yebok",
+      "file": "audio/minor/Yebok.mp3"
     },
     {
-      "name": "Wind Chimes",
-      "file": "audio/minor/wind-chimes.mp3"
+      "name": "GameFace",
+      "file": "audio/minor/GameFace.mp3"
     },
     {
-      "name": "Crackling Fire",
-      "file": "audio/minor/crackling-fire.mp3"
+      "name": "Gloomy",
+      "file": "audio/minor/Gloomy.mp3"
+    },
+    {
+      "name": "DongLinhDao",
+      "file": "audio/minor/Donglinhdao.mp3"
     }
   ],
   "soundEffects": [
     {
-      "name": "Door Creak",
-      "file": "audio/effects/door-creak.mp3"
+      "name": "Gun1",
+      "file": "audio/effects/Gun1.mp3"
     },
     {
-      "name": "Glass Breaking",
-      "file": "audio/effects/glass-breaking.mp3"
+      "name": "Gun2",
+      "file": "audio/effects/Gun2.mp3"
     },
     {
-      "name": "Thunder Clap",
-      "file": "audio/effects/thunder-clap.mp3"
+      "name": "Wolf",
+      "file": "audio/effects/Wolf.mp3"
+    },
+    {
+      "name": "Thunder",
+      "file": "audio/effects/Thunder.mp3"
+    },
+    {
+      "name": "Eating",
+      "file": "audio/effects/Eating.mp3"
+    },
+    {
+      "name": "Ghost1",
+      "file": "audio/effects/Ghost1.mp3"
+    },
+    {
+      "name": "Ghost2",
+      "file": "audio/effects/Ghost2.mp3"
+    },
+    {
+      "name": "Ghost3",
+      "file": "audio/effects/Ghost3.mp3"
+    },
+    {
+      "name": "Ghost4",
+      "file": "audio/effects/Ghost4.mp3"
     }
   ]
 }
