@@ -20,25 +20,16 @@
             <div id="background-audio" class="bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-indigo-700">Background Audio</h2>
                 <div id="background-audio-list"></div>
-                <button onclick="addAudio('background-audio')" class="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">
-                    <i class="fas fa-plus mr-2"></i>Add Background Audio
-                </button>
             </div>
             
             <div id="minor-audio" class="bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-green-700">Minor Audio</h2>
                 <div id="minor-audio-list"></div>
-                <button onclick="addAudio('minor-audio')" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300">
-                    <i class="fas fa-plus mr-2"></i>Add Minor Audio
-                </button>
             </div>
             
             <div id="sound-effects" class="bg-white rounded-lg shadow-md p-6">
                 <h2 class="text-2xl font-semibold mb-4 text-red-700">Sound Effects</h2>
                 <div id="sound-effects-list"></div>
-                <button onclick="addAudio('sound-effects')" class="mt-4 bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300">
-                    <i class="fas fa-plus mr-2"></i>Add Sound Effect
-                </button>
             </div>
         </div>
         
@@ -53,53 +44,37 @@
     </div>
 
     <script>
-        let audioCounter = 0;
-
-        function addAudio(sectionId) {
-            audioCounter++;
-            const audioId = `audio-${audioCounter}`;
-            const section = document.getElementById(`${sectionId}-list`);
-            
+        function createAudioElement(audio, sectionId) {
             const audioElement = document.createElement('div');
             audioElement.className = 'mb-6 p-4 bg-gray-50 rounded-lg';
             audioElement.innerHTML = `
                 <div class="flex justify-between items-center mb-2">
-                    <h3 class="text-lg font-semibold">Audio ${audioCounter}</h3>
-                    <button onclick="removeAudio('${audioId}')" class="text-red-500 hover:text-red-700">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <h3 class="text-lg font-semibold">${audio.name}</h3>
                 </div>
-                <input type="file" accept="audio/*" class="mb-2 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" id="file-${audioId}">
-                <audio id="${audioId}" class="w-full mb-2"></audio>
+                <audio id="${sectionId}-${audio.name}" src="${audio.file}" class="w-full mb-2"></audio>
                 <div class="flex items-center justify-between">
-                    <button onclick="togglePlay('${audioId}')" class="bg-indigo-500 text-white px-3 py-1 rounded-full hover:bg-indigo-600 transition duration-300 text-sm">
+                    <button onclick="togglePlay('${sectionId}-${audio.name}')" class="bg-indigo-500 text-white px-3 py-1 rounded-full hover:bg-indigo-600 transition duration-300 text-sm">
                         <i class="fas fa-play mr-1"></i>Play
                     </button>
-                    <input type="range" min="0" max="1" step="0.1" value="1" class="w-1/2" oninput="adjustVolume('${audioId}', this.value)">
+                    <input type="range" min="0" max="1" step="0.1" value="1" class="w-1/2" oninput="adjustVolume('${sectionId}-${audio.name}', this.value)">
                 </div>
             `;
-            
-            section.appendChild(audioElement);
-            
-            document.getElementById(`file-${audioId}`).addEventListener('change', (e) => handleFileSelect(e, audioId));
+            return audioElement;
         }
 
-        function removeAudio(audioId) {
-            const audioElement = document.getElementById(audioId).parentElement;
-            audioElement.remove();
-        }
-
-        function handleFileSelect(event, audioId) {
-            const file = event.target.files[0];
-            const player = document.getElementById(audioId);
-            player.src = URL.createObjectURL(file);
-            
-            // Save file to local storage
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                localStorage.setItem(audioId, e.target.result);
-            };
-            reader.readAsDataURL(file);
+        function loadAudioList() {
+            fetch('audio-list.json')
+                .then(response => response.json())
+                .then(data => {
+                    const sections = ['backgroundAudio', 'minorAudio', 'soundEffects'];
+                    sections.forEach(section => {
+                        const sectionElement = document.getElementById(`${section.replace(/([A-Z])/g, '-$1').toLowerCase()}-list`);
+                        data[section].forEach(audio => {
+                            sectionElement.appendChild(createAudioElement(audio, section));
+                        });
+                    });
+                })
+                .catch(error => console.error('Error loading audio list:', error));
         }
 
         function togglePlay(audioId) {
@@ -134,19 +109,8 @@
             });
         }
 
-        // Load saved audio files on page load
-        window.onload = function() {
-            for (let i = 0; i < localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if (key.startsWith('audio-')) {
-                    const audioData = localStorage.getItem(key);
-                    const player = document.getElementById(key);
-                    if (player) {
-                        player.src = audioData;
-                    }
-                }
-            }
-        }
+        // Load audio list when the page loads
+        window.onload = loadAudioList;
     </script>
 </body>
 </html>
