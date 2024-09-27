@@ -51,7 +51,10 @@
                 <div class="flex justify-between items-center mb-2">
                     <h3 class="text-lg font-semibold">${audio.name}</h3>
                 </div>
-                <audio id="${sectionId}-${audio.name}" src="${audio.file}" class="w-full mb-2"></audio>
+                <audio id="${sectionId}-${audio.name}" class="w-full mb-2">
+                    <source src="${audio.file}" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
                 <div class="flex items-center justify-between">
                     <button onclick="togglePlay('${sectionId}-${audio.name}')" class="bg-indigo-500 text-white px-3 py-1 rounded-full hover:bg-indigo-600 transition duration-300 text-sm">
                         <i class="fas fa-play mr-1"></i>Play
@@ -81,7 +84,7 @@
             const player = document.getElementById(audioId);
             const button = player.nextElementSibling.querySelector('button');
             if (player.paused) {
-                player.play();
+                player.play().catch(e => console.error("Error playing audio:", e));
                 button.innerHTML = '<i class="fas fa-pause mr-1"></i>Pause';
             } else {
                 player.pause();
@@ -96,7 +99,7 @@
 
         function playAll() {
             document.querySelectorAll('audio').forEach(player => {
-                player.play();
+                player.play().catch(e => console.error("Error playing audio:", e));
                 player.nextElementSibling.querySelector('button').innerHTML = '<i class="fas fa-pause mr-1"></i>Pause';
             });
         }
