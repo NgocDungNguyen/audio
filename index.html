@@ -1,0 +1,152 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Multi-Audio Player</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-8 text-indigo-600">Advanced Multi-Audio Player</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div id="background-audio" class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-indigo-700">Background Audio</h2>
+                <div id="background-audio-list"></div>
+                <button onclick="addAudio('background-audio')" class="mt-4 bg-indigo-500 text-white px-4 py-2 rounded-full hover:bg-indigo-600 transition duration-300">
+                    <i class="fas fa-plus mr-2"></i>Add Background Audio
+                </button>
+            </div>
+            
+            <div id="minor-audio" class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-green-700">Minor Audio</h2>
+                <div id="minor-audio-list"></div>
+                <button onclick="addAudio('minor-audio')" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-full hover:bg-green-600 transition duration-300">
+                    <i class="fas fa-plus mr-2"></i>Add Minor Audio
+                </button>
+            </div>
+            
+            <div id="sound-effects" class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-2xl font-semibold mb-4 text-red-700">Sound Effects</h2>
+                <div id="sound-effects-list"></div>
+                <button onclick="addAudio('sound-effects')" class="mt-4 bg-red-500 text-white px-4 py-2 rounded-full hover:bg-red-600 transition duration-300">
+                    <i class="fas fa-plus mr-2"></i>Add Sound Effect
+                </button>
+            </div>
+        </div>
+        
+        <div class="mt-8 text-center">
+            <button onclick="playAll()" class="bg-purple-500 text-white px-6 py-3 rounded-full hover:bg-purple-600 transition duration-300 text-lg font-semibold">
+                <i class="fas fa-play-circle mr-2"></i>Play All
+            </button>
+            <button onclick="stopAll()" class="bg-yellow-500 text-white px-6 py-3 rounded-full hover:bg-yellow-600 transition duration-300 text-lg font-semibold ml-4">
+                <i class="fas fa-stop-circle mr-2"></i>Stop All
+            </button>
+        </div>
+    </div>
+
+    <script>
+        let audioCounter = 0;
+
+        function addAudio(sectionId) {
+            audioCounter++;
+            const audioId = `audio-${audioCounter}`;
+            const section = document.getElementById(`${sectionId}-list`);
+            
+            const audioElement = document.createElement('div');
+            audioElement.className = 'mb-6 p-4 bg-gray-50 rounded-lg';
+            audioElement.innerHTML = `
+                <div class="flex justify-between items-center mb-2">
+                    <h3 class="text-lg font-semibold">Audio ${audioCounter}</h3>
+                    <button onclick="removeAudio('${audioId}')" class="text-red-500 hover:text-red-700">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <input type="file" accept="audio/*" class="mb-2 w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" id="file-${audioId}">
+                <audio id="${audioId}" class="w-full mb-2"></audio>
+                <div class="flex items-center justify-between">
+                    <button onclick="togglePlay('${audioId}')" class="bg-indigo-500 text-white px-3 py-1 rounded-full hover:bg-indigo-600 transition duration-300 text-sm">
+                        <i class="fas fa-play mr-1"></i>Play
+                    </button>
+                    <input type="range" min="0" max="1" step="0.1" value="1" class="w-1/2" oninput="adjustVolume('${audioId}', this.value)">
+                </div>
+            `;
+            
+            section.appendChild(audioElement);
+            
+            document.getElementById(`file-${audioId}`).addEventListener('change', (e) => handleFileSelect(e, audioId));
+        }
+
+        function removeAudio(audioId) {
+            const audioElement = document.getElementById(audioId).parentElement;
+            audioElement.remove();
+        }
+
+        function handleFileSelect(event, audioId) {
+            const file = event.target.files[0];
+            const player = document.getElementById(audioId);
+            player.src = URL.createObjectURL(file);
+            
+            // Save file to local storage
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                localStorage.setItem(audioId, e.target.result);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function togglePlay(audioId) {
+            const player = document.getElementById(audioId);
+            const button = player.nextElementSibling.querySelector('button');
+            if (player.paused) {
+                player.play();
+                button.innerHTML = '<i class="fas fa-pause mr-1"></i>Pause';
+            } else {
+                player.pause();
+                button.innerHTML = '<i class="fas fa-play mr-1"></i>Play';
+            }
+        }
+
+        function adjustVolume(audioId, volume) {
+            const player = document.getElementById(audioId);
+            player.volume = volume;
+        }
+
+        function playAll() {
+            document.querySelectorAll('audio').forEach(player => {
+                player.play();
+                player.nextElementSibling.querySelector('button').innerHTML = '<i class="fas fa-pause mr-1"></i>Pause';
+            });
+        }
+
+        function stopAll() {
+            document.querySelectorAll('audio').forEach(player => {
+                player.pause();
+                player.currentTime = 0;
+                player.nextElementSibling.querySelector('button').innerHTML = '<i class="fas fa-play mr-1"></i>Play';
+            });
+        }
+
+        // Load saved audio files on page load
+        window.onload = function() {
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('audio-')) {
+                    const audioData = localStorage.getItem(key);
+                    const player = document.getElementById(key);
+                    if (player) {
+                        player.src = audioData;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>
