@@ -48,6 +48,10 @@
       "name": "Eating",
       "file": "./effects/Eating.mp3"
     },
+     {
+      "name": "Scary",
+      "file": "./effects/Scary.mp3"
+    },
     {
       "name": "Wind",
       "file": "./effects/Wind.mp3"
